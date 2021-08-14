@@ -83,7 +83,7 @@ public class CircleQueue {
     }
 
     private int headQueue() {
-        return arr[front + 1];
+        return arr[front];
     }
 
     public CircleQueue(int maxSize) {
@@ -102,7 +102,7 @@ public class CircleQueue {
             throw new Exception("队列已满");
         }
         arr[rear] = element;
-        rear = (rear + 1) % maxSize;
+        rear = (rear + 1) % maxSize; // 余 = 还剩几个空间
     }
 
     // 取得数据
@@ -111,7 +111,7 @@ public class CircleQueue {
             throw new Exception("队列没有元素了");
         }
         int value = arr[front];
-        front = (front + 1) % maxSize;
+        front = (front + 1) % maxSize; // front取模主要作用不超maxsize 减少了判断
         return value;
     }
 
@@ -138,8 +138,9 @@ public class CircleQueue {
     }
 
     private int size() {
-        // 5 10 3
-        return (rear + maxSize - front) % maxSize;
+        // 5 10 3 maxSize被抵消 真实结果=rear-front
+        // 估计为了保证程序的健壮性才使用取模，因为取模可以保证是正整数
+        return /*(rear + maxSize - front) % maxSize;*/ rear-front;
     }
 
 }
