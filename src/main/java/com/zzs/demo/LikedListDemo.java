@@ -15,7 +15,8 @@ public class LikedListDemo {
         likedList.add(new Node(4, "4", "4"));
         likedList.add(new Node(3, "3", "3"));
 
-        likedList.update(new Node(3, "abc", "3"));
+//        likedList.update(new Node(3, "abc", "3"));
+        likedList.del(1);
         likedList.showList();
     }
 }
@@ -74,7 +75,7 @@ class LikedList {
      */
     void update(Node node) {
         Node temp = headNode;
-        boolean flag = false;
+
         while (true) {
             if (temp.no == node.no) {
                 temp.name = node.name;
@@ -86,6 +87,26 @@ class LikedList {
         }
 
     }
+
+    void del(int no) {
+        boolean flag = false;
+        Node temp = headNode;
+        while (true) {
+            if (temp.next == null) {
+                break;
+            }
+            if (no == temp.next.no) {
+                flag = true;
+                break;
+            }
+            temp = temp.next;
+        }
+        if (flag) {
+           temp.next = temp.next.next;
+//           temp = temp.next;
+        }
+    }
+
 
     public void showList() {
         if (headNode.next == null) {
