@@ -11,40 +11,20 @@ public class SingleLikedList {
         likedList.add(new Node(3, "3", "3"));
 
 //        likedList.update(new Node(3, "abc", "3"));
-        likedList.del(1);
-        likedList.showList();
-        Node lastNode = findLastNode(likedList.getHeadNode(), 1);
-        System.out.println("倒数：" + lastNode);
-        System.out.println(length(likedList.getHeadNode()) + "个节点元素");
+//        likedList.del(1);
 
+//        Node lastNode = findLastNode(likedList.getHeadNode(), 1);
+//        System.out.println("倒数：" + lastNode);
+//        System.out.println(length(likedList.getHeadNode()) + "个节点元素");
+
+        fallNode(likedList.headNode);
+        showList(likedList.getHeadNode());
     }
 
     private Node headNode = new Node(0, "", "");
 
     public Node getHeadNode() {
         return headNode;
-    }
-
-    public void add(Node node) {
-        Node temp = headNode;
-        boolean flag = false; // 是否冲突
-        while (true) {
-            if (temp.next == null) {
-                break;
-            }
-            if (temp.next.no > node.no) {
-                break;
-            } else if (temp.next.no == node.no) {
-                flag = true;
-            }
-            temp = temp.next;
-        }
-        if (flag) {
-            System.out.println("不能重复添加");
-        } else {
-            node.next = temp.next;
-            temp.next = node;
-        }
     }
 
     /**
@@ -86,6 +66,52 @@ public class SingleLikedList {
         }
     }
 
+    public void add(Node node) {
+        Node temp = headNode;
+        boolean flag = false; // 是否冲突
+        while (true) {
+            if (temp.next == null) {
+                break;
+            }
+            if (temp.next.no > node.no) {
+                break;
+            } else if (temp.next.no == node.no) {
+                flag = true;
+            }
+            temp = temp.next;
+        }
+        if (flag) {
+            System.out.println("不能重复添加");
+        } else {
+            node.next = temp.next;
+            temp.next = node;
+        }
+    }
+
+    /**
+     * 单链表的反转 (腾讯面试题)
+     */
+    public static void fallNode(Node headNode) {
+        if (headNode == null || headNode.next.next == null) {
+            // headNode为空或者第一位为空没必要反转
+            return;
+        }
+        Node cur = headNode.next;
+        Node next = null;
+        // 辅助指针
+        Node node = new Node(0, "", "");
+
+        while (cur != null) {
+            // 保存下一个节点
+            next = cur.next;
+            // 保存链表的反转，cur本身会因为遍历发生改变，next=node 保存反转的结果
+            cur.next = node.next;
+            node.next = cur;
+            cur = next;
+        }
+        headNode.next = node.next;
+    }
+
     /**
      * 获取倒数节点 (新浪面试题)
      * @return
@@ -117,7 +143,7 @@ public class SingleLikedList {
         return length;
     }
 
-    public void showList() {
+    public static void showList(Node headNode) {
         if (headNode.next == null) {
             System.out.println("链表为空");
             return;
@@ -157,8 +183,7 @@ public class SingleLikedList {
         public String toString() {
             return "Node{" +
                     "no='" + no + '\'' +
-                    ", name='" + name + '\'' +
-                    ", waiName='" + waiName + '\'' +
+                    ", name='" + name + '\'' + ", waiName='" + waiName + '\'' +
                     '}';
         }
     }
